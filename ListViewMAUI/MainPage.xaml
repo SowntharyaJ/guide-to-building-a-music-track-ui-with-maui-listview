@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+             xmlns:local="clr-namespace:ListViewMAUI"
+             x:Class="ListViewMAUI.MainPage">
+
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="BorderColor" Value="LightGray"/>
+            <Setter Property="FontFamily" Value="AudioIconFonts"/>
+            <Setter Property="TextColor" Value="Grey"/>
+            <Setter Property="FontSize" Value="22"/>
+        </Style>
+    </ContentPage.Resources>
+    
+    <syncfusion:SfListView x:Name="listView" 
+                            ItemsSource="{Binding AudioCollection}"
+                            ScrollBarVisibility="Always"
+                            SelectionMode="None" 
+                            ItemSize="94">
+        
+        <syncfusion:SfListView.ItemTemplate>
+            <DataTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="1"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="94"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="70"/>
+                    </Grid.ColumnDefinitions>
+                    <Frame HorizontalOptions="Center" IsClippedToBounds="True" CornerRadius="4" HasShadow="False" Grid.Row="0" Grid.Column="0" HeightRequest="72" WidthRequest="72" Padding="0">
+                        <Image Grid.Column="0" Grid.Row="0" Source="{Binding Image}" HorizontalOptions="Center" VerticalOptions="FillAndExpand" HeightRequest="72" WidthRequest="72" Aspect="Fill"/>
+                    </Frame>
+                    <Grid Grid.Row="0" Grid.Column="1" VerticalOptions="CenterAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Row="0"  Text="{Binding Title}" LineBreakMode="WordWrap" FontFamily="Roboto-Regular" FontSize="{OnPlatform Android={OnIdiom Phone=15, Tablet=22}, iOS=16, WinUI=14,MacCatalyst=16}" CharacterSpacing="0.1"/>
+                        <Label Grid.Row="1" LineBreakMode="WordWrap" LineHeight="{OnPlatform iOS={OnIdiom Tablet=1.2, Default=1.025}, Default=1.2}" Text="{Binding Author}" FontFamily="Roboto-Regular" FontSize="14" CharacterSpacing="0.1"  Opacity="0.8" />
+                        <Label Grid.Row="2"  Text="{Binding Size}" FontSize="{OnPlatform Default=10,WinUI=12,MacCatalyst=12}" FontFamily="Roboto-Regular" CharacterSpacing="0.15" Margin="0,0,11,0" Opacity="0.8"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.RowSpan="1" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button                                                 
+                Grid.Row="1"                                         
+                Command="{Binding Path=BindingContext.PlayAudioCommand, Source={x:Reference listView}}"
+                CommandParameter="{Binding .}"                          
+                IsVisible="{Binding IsPlayVisible}"
+                Text="&#xea15;"
+                            VerticalOptions="End"/>
+                        <Button                                                 
+                Grid.Row="1"                          
+                Command="{Binding Path=BindingContext.PauseAudioCommand, Source={x:Reference listView}}"
+                CommandParameter="{Binding .}"                          
+                IsVisible="{Binding IsPauseVisble}"
+                            VerticalOptions="Center"
+                Text="&#xea16;" />
+
+                        <Label
+                Grid.Row="2"                                    
+                FontSize="14"
+                IsVisible="{Binding IsPauseVisble}"
+                Text="{Binding CurrentAudioPosition}"
+                TextColor="Black"
+                            HorizontalOptions="Center"
+                VerticalTextAlignment="Center" />
+                    </Grid>
+                    <BoxView Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HeightRequest="1" VerticalOptions="End" />
+                </Grid>
+            </DataTemplate>
+        </syncfusion:SfListView.ItemTemplate>
+    </syncfusion:SfListView>
+    
+</ContentPage>
