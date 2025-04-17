@@ -1,5 +1,4 @@
-﻿using Android.Media;
-using ListViewMAUI.Service;
+﻿using ListViewMAUI.Service;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
 
